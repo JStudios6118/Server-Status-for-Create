@@ -28,21 +28,23 @@ function updateStatus(data) {
     playersElement.innerText = "Players Online: " + data.players.online + "/" + data.players.max
 
     document.getElementById("players-list").innerHTML = "<h3>Players Online</h3>"
-    
-    if (data.players.online === 0){
+
+    if (data.players.online === 0) {
       var new_el = document.createElement('p')
       new_el.innerText = "There is no one online right now!"
       document.getElementById("players-list").appendChild(new_el)
     } else {
 
       let playerList = data.players.list
-  
+
       for (const [key, value] of Object.entries(playerList)) {
-        var new_el = document.createElement('p')
-        new_el.innerText = value.name_raw
-        document.getElementById("players-list").appendChild(new_el)
-    }
+        if (value.name_raw != "Anonymous Player") {
+          var new_el = document.createElement('p')
+          new_el.innerText = value.name_raw
+          document.getElementById("players-list").appendChild(new_el)
+        }
       }
+    }
   } else {
     outputElement.innerText = "Server is offline!"
     document.getElementById("other-content").style.display = 'none'
